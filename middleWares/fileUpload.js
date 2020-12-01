@@ -1,6 +1,7 @@
 const multer = require('multer'); // This is a middleware, used to extract the data from request which is of type "formData" (not the JSON). Note : Form data can carry Binary data as well, but JSON can't.
 const { v4: uuid } = require('uuid'); // This will generate random unique ID
-
+const fs = require('fs');
+const path = require('path');
 
 // Allowed file types.
 const MIME_TYPE_TO_FILE_EXTENSION_MAPPER = {
@@ -9,10 +10,25 @@ const MIME_TYPE_TO_FILE_EXTENSION_MAPPER = {
     'image/jpg' : 'jpg',
 }
 
+// console.log('FOLDER', fs.existsSync('Uploads/images'))
+
+
+
+// fs.mkdirSync('../Uploads')
+
+
 const FileUpload = multer({
     limits : 1024000, // Allowed file size.
     storage : multer.diskStorage({
         destination : (req, file, cb)=>{
+            if(!fs.existsSync(path.join(__dirname, '../Uploads'))){
+                console.log('I am called...for UPLOADS')
+                fs.mkdirSync(path.join(__dirname, '../Uploads'))
+            }
+            if(!fs.existsSync(path.join(__dirname, '../Uploads/images'))){
+                console.log('I am called...for IMAGES')
+                fs.mkdirSync(path.join(__dirname, '../Uploads/images'))
+            }
             cb(null, 'Uploads/images') // LocalStorage path in server.
         },
         filename : (req, file, cb)=>{
