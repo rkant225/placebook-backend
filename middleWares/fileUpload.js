@@ -3,19 +3,13 @@ const { v4: uuid } = require('uuid'); // This will generate random unique ID
 const fs = require('fs');
 const path = require('path');
 
+
 // Allowed file types.
 const MIME_TYPE_TO_FILE_EXTENSION_MAPPER = {
     'image/jpeg' : 'jpeg',
     'image/png' : 'png',
     'image/jpg' : 'jpg',
 }
-
-// console.log('FOLDER', fs.existsSync('Uploads/images'))
-
-
-
-// fs.mkdirSync('../Uploads')
-
 
 const FileUpload = multer({
     limits : 1024000, // Allowed file size.
